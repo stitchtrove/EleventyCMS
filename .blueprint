@@ -1,0 +1,11 @@
+created:
+    - database/factories/CollectionFactory.php
+    - database/factories/PostFactory.php
+    - database/migrations/2024_03_16_140026_create_collections_table.php
+    - database/migrations/2024_03_16_140027_create_posts_table.php
+    - app/Models/Collection.php
+    - app/Models/Post.php
+models:
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string nullable' }
+    Collection: { name: string, url: string, relationships: { hasMany: Post } }
+    Post: { title: string, content: longtext, author: 'string nullable', published_at: 'nullable timestamp', relationships: { belongsTo: Collection } }

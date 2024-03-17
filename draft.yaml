@@ -1,0 +1,16 @@
+models:
+
+  Collection:
+    name: string
+    url: string nullable
+    relationships:
+      hasMany: Post
+
+
+  Post:
+    title: string
+    content: longtext
+    author: string nullable
+    published_at: nullable timestamp
+    relationships:
+      belongsTo: Collection
