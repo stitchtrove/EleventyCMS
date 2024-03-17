@@ -37,8 +37,6 @@ class generate extends Command
         foreach ($collections as $collection) {
             if (!file_exists($location . $collection->name)) {
                 // Create the directory
-                // Storage::makeDirectory('app/export/' . $collection->name);
-                // Storage::makeDirectory('export/' . $collection->name, 0755, true, true);
                 mkdir($location . $collection->name, 0755, true);
             }
             // Iterate through each post and create a Markdown file
@@ -50,7 +48,6 @@ class generate extends Command
                 $fileName = Str::slug($post->title) . '.md'; // You may need to adjust the file name generation method
 
                 // Save Markdown content to file
-                // File::put(storage_path('app/export/' . $collection->name . '/' . $fileName), $markdownContent);
                 file_put_contents($location . $collection->name . '/' . $fileName, $markdownContent);
             }
         }
@@ -65,10 +62,6 @@ class generate extends Command
             foreach ($output as $line) {
                 $this->line($line);
             }
-            $this->info('Committing code');
-            exec('git add .', $output, $returnCode);
-            exec('git commit -m "updated content"', $output, $returnCode);
-            exec('git push origin master', $output, $returnCode);
         } else {
             $this->error('Eleventy build failed.');
             foreach ($output as $line) {
