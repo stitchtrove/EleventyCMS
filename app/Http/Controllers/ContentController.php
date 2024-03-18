@@ -28,7 +28,14 @@ class ContentController extends Controller
     public function save(Request $request)
     {
         $post = Post::where('id', $request->post_id)->firstOrFail();
-        $post->update(['content' => $request->newContent]);
+        try {
+            $post->update(['content' => $request->newContent]);
+            toastr()->success('Data has been saved successfully!');
+        } catch (Exception $e) {
+            toastr()->error('Data could not be saved!');
+            toastr()->error($e);
+        }
+
         return redirect('/content');
     }
 }
