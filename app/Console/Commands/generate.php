@@ -30,9 +30,7 @@ class generate extends Command
      */
     public function handle()
     {
-        // Get all posts from the database
-        // $posts = Post::all();
-        $location = '../24personal/src/';
+        $location = './Eleventy/src/';
         $collections = Collection::with('posts')->get();
         foreach ($collections as $collection) {
             if (!file_exists($location . $collection->name)) {
@@ -53,21 +51,7 @@ class generate extends Command
         }
 
         $this->info('Markdown files generated successfully.');
-        // Execute eleventy build command
-        exec('cd ../24personal && npx eleventy', $output, $returnCode);
 
-        // Output command result
-        if ($returnCode === 0) {
-            $this->info('Eleventy build successful.');
-            foreach ($output as $line) {
-                $this->line($line);
-            }
-        } else {
-            $this->error('Eleventy build failed.');
-            foreach ($output as $line) {
-                $this->error($line);
-            }
-        }
         return 0;
     }
 }
