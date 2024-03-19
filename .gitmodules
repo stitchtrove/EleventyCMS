@@ -1,0 +1,3 @@
+[submodule "Eleventy"]
+	path = Eleventy
+	url = https://github.com/stitchtrove/personal_website.git
