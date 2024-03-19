@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use ZipArchive;
 use App\Models\Post;
 use App\Models\Collection;
-use Exception;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -69,10 +70,16 @@ class UploadController extends Controller
             // delete the stored zip
             Storage::delete(storage_path('app/uploads/' . $fileName));
 
+            // delete existing content
+            if (Collection::count() !== 0 || Post::count() !== 0) {
+                Post::truncate();
+                Collection::truncate();
+            }
+
             // create the collections
             foreach ($directoryList as $directoryName) {
                 $collection = new Collection();
-                $collection->name = $directoryName['name'];
+                $collection->name = Str::upper($directoryName['name']);
                 $collection->url = $directoryName['name'];
                 $collection->save(); // Save the new collection to the database
             }
